@@ -55,6 +55,7 @@ pipeline {
                 //     enableConfigSubstitution: true
                 // )
                 sh 'kubectl apply -f .'
+                }
             }
         }
         // stage('DeployToProduction') {
