@@ -1,15 +1,94 @@
-# cicd-pipeline-train-schedule-autodeploy
+1. Link github repo: https://github.com/lam-phanminh/End-Project-2
 
-This is a simple train schedule app written using nodejs. It is intended to be used as a sample application for a series of hands-on learning activities.
+2. To run Jenkinsfile. I set up a node docker. 
+   
+    ![](./Pictures/docker-cloud.png)
+    ![](./Pictures/config-cloud-1.png)
+    ![](./Pictures/config-cloud-2.png)
 
-## Running the app
+3. Set up credentials: 
 
-You need a Java JDK 7 or later to run the build. You can run the build like this:
+   ![](./Pictures/Credentials.png)
 
-    ./gradlew build
+4. Create job multi branch: 
+   
+   ![](./Pictures/job-1.png) 
+   ![](./Pictures/job-2.png) 
+   ![](./Pictures/job-3.png) 
+   ![](./Pictures/job-main.png) 
 
-You can run the app with:
+5. Console output: 
+   - Stage: ``Build ``
+  
+   ![](./Pictures/stage-build.png) 
 
-    ./gradlew npm_start
+   - Stage: `` Build Docker Image `` 
+  
+    ![](./Pictures/stage-build-image.png)
 
-Once it is running, you can access it in a browser at http://localhost:8080
+   - Stage: `` Push Docker Image`` 
+
+    ![](./Pictures/stage-push.png)
+    ![](./Pictures/stage-push-done.png)
+
+   - Stage: `` CanaryDeploy`` 
+
+    ![](./Pictures/stage-canary-deploy.png)
+    ![](./Pictures/stage-canary-deploy-done.png)
+
+   - Stage: `` DeployToProduction``
+
+    ![](./Pictures/stage-deploy-production.png)
+    ![](./Pictures/stage-deploy-production-done.png)   
+
+6. Images pushed to dockerhub: 
+   
+    ![](./Pictures/docker-hub-2.png)
+
+7. Deployments: 
+
+    ![](./Pictures/deployments.png) 
+
+8. Services: 
+
+    ![](./Pictures/svcs.png)
+
+9. Pods: 
+    
+    ![](./Pictures/pods.png) 
+
+10. Install metric-server: 
+    
+    ``kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml``
+
+    ![](./Pictures/deployment-metric-server.png)
+    ![](./Pictures/metric-server.png)
+
+1.  ``kubectl top pod`` 
+
+    ![](./Pictures/top-pod.png)
+
+2.  Config HPA to deployments: 
+
+    ![](./Pictures/config-hpa-1.png) 
+    ![](./Pictures/config-hpa-2.png) 
+
+3.  ``kubectl describe hpa hpa-train-schedule-deployment-canary ``
+
+    ![](./Pictures/hpa-1.png)
+    
+4.  ``kubectl describe hpa kubectl describe hpa hpa-train-schedule-kube``
+
+    ![](./Pictures/hpa-2.png)
+
+5.  `` kubectl get hpa ``
+
+    ![](./Pictures/hpa.png)
+
+6.  Deploy ``Prometheus - Grafana`` by ``helm`` 
+- Run commands: 
+  + `` kubectl create namespace monitoring`` 
+  + `` helm repo add prometheus-community https://prometheus-community.github.io/helm-charts``
+  + `` helm repo update`` 
+  + `` helm install prometheus-grafana-stack prometheus-community/kube-prometheus-stack --namespace monitoring``
+
