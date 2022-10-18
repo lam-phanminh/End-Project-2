@@ -77,32 +77,5 @@ pipeline {
             }
         }
 
-        // stage('Prometheus-Deploy') {
-        //     when {
-        //         branch 'master'
-        //     }
-        //     steps {
-        //         // kubernetesDeploy(
-        //         //     kubeconfigId: 'kubeconfig',
-        //         //     configs: 'prometheus.yml',
-        //         //     enableConfigSubstitution: true
-        //         // )
-        //         sh 'sudo su edureka && whoami && kubectl apply -f /home/edureka/monitoring/prometheus.yml'
-        //     }
-        // }
-
-        // stage('Grafana-Deploy') {
-        //     when {
-        //         branch 'master'
-        //     }
-        //     steps {
-        //         kubernetesDeploy(
-        //             kubeconfigId: 'kubeconfig',
-        //             configs: 'grafana.yml',
-        //             enableConfigSubstitution: true
-        //         )
-        //     }
-        // }
-
     }
 }
