@@ -46,15 +46,11 @@ pipeline {
                 CANARY_REPLICAS = 1
             }
             steps {
-                // withKubeConfig(caCertificate: '', clusterName: 'kubernetes', contextName: 'kubernetes', credentialsId: 'admin.conf', namespace: 'default', serverUrl: '172.31.17.7') {
-    // some block
-
                 kubernetesDeploy(
                     kubeconfigId: 'kubeconfig',
                     configs: 'train-schedule-kube-canary.yml',
                     enableConfigSubstitution: true
                 )
-                // sh 'kubectl apply -f .'
                 }
             }
         
