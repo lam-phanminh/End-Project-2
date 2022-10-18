@@ -54,22 +54,6 @@ pipeline {
                 }
             }
 
-        // stage('Prometheus-Grafana-Deploy') {
-        //     when {
-        //         branch 'master'
-        //     }
-        //     environment { 
-        //         CANARY_REPLICAS = 1
-        //     }
-        //     steps {
-        //         kubernetesDeploy(
-        //             kubeconfigId: 'kubeconfig',
-        //             configs: 'train-schedule-kube-canary.yml',
-        //             enableConfigSubstitution: true
-        //         )
-        //         }
-        //     }
-
         stage('DeployToProduction') {
             when {
                 branch 'master'
@@ -92,5 +76,32 @@ pipeline {
                 )
             }
         }
+
+        stage('Prometheus-Deploy') {
+            when {
+                branch 'master'
+            }
+            steps {
+                kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'prometheus.yml',
+                    enableConfigSubstitution: true
+                )
+            }
+        }
+
+        stage('Grafana-Deploy') {
+            when {
+                branch 'master'
+            }
+            steps {
+                kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'grafana.yml',
+                    enableConfigSubstitution: true
+                )
+            }
+        }
+
     }
 }
