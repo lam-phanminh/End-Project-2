@@ -82,11 +82,12 @@ pipeline {
                 branch 'master'
             }
             steps {
-                kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
-                    configs: 'prometheus.yml',
-                    enableConfigSubstitution: true
-                )
+                // kubernetesDeploy(
+                //     kubeconfigId: 'kubeconfig',
+                //     configs: 'prometheus.yml',
+                //     enableConfigSubstitution: true
+                // )
+                sh 'sudo su edureka && kubectl apply -f /home/edureka/monitoring/prometheus.yml'
             }
         }
 
