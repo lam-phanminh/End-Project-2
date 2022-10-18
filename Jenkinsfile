@@ -87,7 +87,7 @@ pipeline {
                 //     configs: 'prometheus.yml',
                 //     enableConfigSubstitution: true
                 // )
-                sh 'sudo su edureka && kubectl apply -f /home/edureka/monitoring/prometheus.yml'
+                sh 'sudo su edureka && whoami && kubectl apply -f /home/edureka/monitoring/prometheus.yml'
             }
         }
 
